@@ -64,8 +64,12 @@ class BurgerBuilder extends Component{
         this.setState({purchasable: sum+offset <= 0});
     }
 
-    purchaseHandler = () => {
+    updatePurchaseHandler = () => {
         this.setState({purchasing: true});
+    }
+
+    canclePurchaseHandler = () => {
+        this.setState({purchasing: false});
     }
 
     render(){
@@ -75,7 +79,7 @@ class BurgerBuilder extends Component{
         }
         return(
             <AUX>
-                <Modal show = {this.state.purchasing}>
+                <Modal show = {this.state.purchasing} clicked = {this.canclePurchaseHandler}>
                     <OrderSummary ingredients = {this.state.ingredients}/>
                 </Modal>
                 <Burger ingredients = {this.state.ingredients}/>
@@ -85,7 +89,7 @@ class BurgerBuilder extends Component{
                     disabledInfo = {disabledInfo}
                     totalPrice = {this.state.totalPrice}
                     purchasable = {this.state.purchasable}
-                    ordered = {this.purchaseHandler}
+                    ordered = {this.updatePurchaseHandler}
                     />
             </AUX>
         )
