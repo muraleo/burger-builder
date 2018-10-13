@@ -1,0 +1,19 @@
+.CheckoutSummary{
+    text-align: center;
+    width: 80%;
+    margin: auto;
+}
+
+.CheckoutBurger{
+    width: 100%;
+    /* height: 300px; */
+    margin: auto;
+    display: flex; /* Magic begins */
+    justify-content: center; /* Center contents */
+}
+
+@media (min-width: 600px){
+    .CheckoutSummary{
+        width: 500px;
+    }
+}
