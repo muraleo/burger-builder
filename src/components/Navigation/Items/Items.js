@@ -4,10 +4,8 @@ import classes from "./Items.module.css";
 
 const items = props => (
 	<ul className={classes.Items}>
-		<Item link="/" active>
-			Burger Builder
-		</Item>
-		<Item link="/">Checkout</Item>
+		<Item link="/">Burger Builder</Item>
+		<Item link="/orders">Orders</Item>
 	</ul>
 );
 
