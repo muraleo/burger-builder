@@ -7,11 +7,54 @@ import Spinner from "../../../components/UI/Spinner/Spinner";
 
 class ContactData extends Component {
 	state = {
-		name: "",
-		email: "",
-		address: {
-			street: "",
-			postalCode: ""
+		orderForm: {
+			name: {
+				elementtype: "input",
+				elementconfig: {
+					type: "text",
+					placeholder: "Name"
+				},
+				value: ""
+			},
+			email: {
+				elementtype: "input",
+				elementconfig: {
+					type: "text",
+					placeholder: "Email"
+				},
+				value: ""
+			},
+			street: {
+				elementtype: "input",
+				elementconfig: {
+					type: "text",
+					placeholder: "Street"
+				},
+				value: ""
+			},
+			zipCode: {
+				elementtype: "input",
+				elementconfig: {
+					type: "text",
+					placeholder: "Zipcode"
+				},
+				value: ""
+			},
+			country: {
+				elementtype: "input",
+				elementconfig: {
+					type: "text",
+					placeholder: "Country"
+				},
+				value: ""
+			},
+			deliveryMethod: {
+				elementtype: "select",
+				elementconfig: {
+					options: ["fastest", "cheapest"]
+				},
+				value: ""
+			}
 		}
 	};
 
@@ -20,17 +63,7 @@ class ContactData extends Component {
 		this.setState({ loading: true });
 		const order = {
 			ingredients: this.props.ingredients,
-			price: this.props.price,
-			customer: {
-				name: "Leo",
-				address: {
-					street: "test street",
-					zipcode: "12345",
-					country: "USA"
-				},
-				email: "test@test.com"
-			},
-			deliveryMethod: "fastest"
+			price: this.props.price
 		};
 		// console.log(order);
 		axios
@@ -44,33 +77,33 @@ class ContactData extends Component {
 			});
 	};
 
+	inputChangedHandler = (event, inputId) => {
+		const updateOrderForm = { ...this.state.orderForm };
+		const updateFormElement = { ...updateOrderForm[inputId] };
+		updateFormElement.value = event.target.value;
+		updateOrderForm[inputId] = updateFormElement;
+		this.setState({ orderForm: updateOrderForm });
+	};
+
 	render() {
+		let formElements = [];
+		for (let key in this.state.orderForm) {
+			formElements.push({
+				id: key,
+				config: this.state.orderForm[key]
+			});
+		}
 		let form = (
 			<form>
-				<Input
-					inputtype="input"
-					type="text"
-					name="name"
-					placeholder="Your name"
-				/>
-				<Input
-					inputtype="input"
-					type="email"
-					name="email"
-					placeholder="Email address"
-				/>
-				<Input
-					inputtype="input"
-					type="text"
-					name="street"
-					placeholder="Street"
-				/>
-				<Input
-					inputtype="input"
-					type="text"
-					name="postal"
-					placeholder="Zip code"
-				/>
+				{formElements.map(e => (
+					<Input
+						key={e.id}
+						elementtype={e.config.elementtype}
+						elementconfig={e.config.elementconfig}
+						value={e.config.value}
+						changed={event => this.inputChangedHandler(event, e.id)}
+					/>
+				))}
 				<Button btnType="Success" clicked={this.orderHandler}>
 					ORDER
 				</Button>
