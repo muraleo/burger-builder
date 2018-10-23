@@ -64,12 +64,12 @@ class BurgerBuilder extends Component {
 		// }
 	};
 
-	updatePurchasableState(offset) {
-		const ingredients = { ...this.state.ingredients };
+	updatePurchasableState(ingredients) {
+		// const ingredients = { ...this.state.ingredients };
 		const sum = Object.values(ingredients).reduce((sum, cur) => {
 			return sum + cur;
 		}, 0);
-		this.setState({ purchasable: sum + offset <= 0 });
+		return sum + this.props.totalPrice <= 4;
 	}
 
 	updatePurchaseHandler = () => {
@@ -118,7 +118,9 @@ class BurgerBuilder extends Component {
 						ingredientRemoved={this.props.onIngredientRemoved}
 						disabledInfo={disabledInfo}
 						totalPrice={this.props.totalPrice}
-						purchasable={this.state.purchasable}
+						purchasable={this.updatePurchasableState(
+							this.props.ings
+						)}
 						ordered={this.updatePurchaseHandler}
 					/>
 				</AUX>
