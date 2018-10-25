@@ -5,6 +5,8 @@ import classes from "./ContactData.module.css";
 import axios from "../../../axios-db";
 import Spinner from "../../../components/UI/Spinner/Spinner";
 import { connect } from "react-redux";
+import withErrorHandler from "../../../hoc/WithErrorHandler/WithErrorHandler";
+import * as actionTypes from "../../../store/actions/";
 
 class ContactData extends Component {
 	state = {
@@ -92,7 +94,7 @@ class ContactData extends Component {
 
 	orderHandler = event => {
 		event.preventDefault();
-		this.setState({ loading: true });
+		// this.setState({ loading: true });
 		const contactData = {};
 		for (let cid in this.state.orderForm) {
 			contactData[cid] = this.state.orderForm[cid].value;
@@ -102,16 +104,18 @@ class ContactData extends Component {
 			price: this.props.price,
 			contact: contactData
 		};
+		this.props.onPurchaseBurgerStart(order);
+
 		// console.log(order);
-		axios
-			.post("/order.json", order)
-			.then(response => {
-				this.setState({ loading: false });
-				this.props.history.push("/");
-			})
-			.catch(err => {
-				this.setState({ loading: false });
-			});
+		// axios
+		// 	.post("/order.json", order)
+		// 	.then(response => {
+		// 		this.setState({ loading: false });
+		// 		this.props.history.push("/");
+		// 	})
+		// 	.catch(err => {
+		// 		this.setState({ loading: false });
+		// 	});
 	};
 
 	checkValidity(value, rules) {
@@ -200,4 +204,14 @@ const mapStateToProps = state => {
 	};
 };
 
-export default connect(mapStateToProps)(ContactData);
+const mapReducerToProps = dispatch => {
+	return {
+		onPurchaseBurgerStart: orderData =>
+			dispatch(actionTypes.purchaseBurgerStart(orderData))
+	};
+};
+
+export default connect(
+	mapStateToProps,
+	mapReducerToProps
+)(withErrorHandler(ContactData, axios));
