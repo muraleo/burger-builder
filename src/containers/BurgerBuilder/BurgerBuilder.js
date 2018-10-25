@@ -20,22 +20,13 @@ class BurgerBuilder extends Component {
 	// }
 
 	state = {
-		purchasable: true,
-		purchasing: false,
+		// purchasable: true,
+		// purchasing: false,
 		loading: false,
 		error: false
 	};
 
-	componentDidMount() {
-		// axios
-		// 	.get("https://leo-burger-builder.firebaseio.com/ingredients.json")
-		// 	.then(res => {
-		// 		this.setState({ ingredients: res.data });
-		// 	})
-		// 	.catch(err => {
-		// 		this.setState({ error: true });
-		// 	});
-	}
+	componentDidMount() {}
 
 	addIngredientHandler = type => {
 		// const newCount = this.state.ingredients[type] + 1;
