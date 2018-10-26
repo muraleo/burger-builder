@@ -9,10 +9,10 @@ export const purchaseBurgerSuccess = (id, orderData) => {
 	};
 };
 
-export const purchaseBurgerFailed = error => {
+export const purchaseBurgerFailed = err => {
 	return {
 		type: actionTypes.PURCHASE_BURGER_FAILED,
-		error: error
+		error: err
 	};
 };
 
@@ -24,19 +24,17 @@ export const purchaseBurgerStart = () => {
 
 export const purchaseBurger = orderData => {
 	return dispatch => {
-		dispatch(purchaseBurgerStart);
+		dispatch(purchaseBurgerStart());
 		axios
-			.post("/order.json", orderData)
+			.post(
+				"https://leo-burger-builder.firebaseio.com/order.json",
+				orderData
+			)
 			.then(response => {
-				dispatch(
-					actionTypes.PURCHASE_BURGER_SUCCESS(
-						response.data,
-						orderData
-					)
-				);
+				dispatch(purchaseBurgerSuccess(response.data, orderData));
 			})
 			.catch(err => {
-				dispatch(actionTypes.PURCHASE_BURGER_FAILED(err));
+				dispatch(purchaseBurgerFailed(err));
 			});
 	};
 };

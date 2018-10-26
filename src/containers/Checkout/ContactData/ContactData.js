@@ -6,7 +6,7 @@ import axios from "../../../axios-db";
 import Spinner from "../../../components/UI/Spinner/Spinner";
 import { connect } from "react-redux";
 import withErrorHandler from "../../../hoc/WithErrorHandler/WithErrorHandler";
-import * as actionTypes from "../../../store/actions/";
+import * as actionTypes from "../../../store/actions/index";
 
 class ContactData extends Component {
 	state = {
@@ -83,7 +83,7 @@ class ContactData extends Component {
 				elementconfig: {
 					options: ["fastest", "cheapest"]
 				},
-				value: "",
+				value: "fastest",
 				valid: true,
 				validation: {}
 			}
@@ -199,9 +199,9 @@ class ContactData extends Component {
 
 const mapStateToProps = state => {
 	return {
-		ings: state.ingredients,
-		price: state.totalPrice,
-		loading: state.loading
+		ings: state.burgerBuilder.ingredients,
+		price: state.burgerBuilder.totalPrice,
+		loading: state.order.loading
 	};
 };
 
