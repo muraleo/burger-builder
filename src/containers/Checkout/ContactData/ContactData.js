@@ -205,7 +205,7 @@ const mapStateToProps = state => {
 	};
 };
 
-const mapReducerToProps = dispatch => {
+const mapDispatchToProps = dispatch => {
 	return {
 		onPurchaseBurgerStart: orderData =>
 			dispatch(actionTypes.purchaseBurger(orderData))
@@ -214,5 +214,5 @@ const mapReducerToProps = dispatch => {
 
 export default connect(
 	mapStateToProps,
-	mapReducerToProps
+	mapDispatchToProps
 )(withErrorHandler(ContactData, axios));

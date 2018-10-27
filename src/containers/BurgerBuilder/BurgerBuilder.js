@@ -8,7 +8,7 @@ import axios from "../../axios-db";
 import Spinner from "../../components/UI/Spinner/Spinner";
 import WithErrorHandler from "../../hoc/WithErrorHandler/WithErrorHandler";
 import { connect } from "react-redux";
-import * as burgerBuilderActions from "../../store/actions/index";
+import * as actions from "../../store/actions/index";
 
 class BurgerBuilder extends Component {
 	// can use constructor
@@ -88,6 +88,7 @@ class BurgerBuilder extends Component {
 		// 	pathname: "checkout",
 		// 	search: `?${queryString }`
 		// });
+		this.props.onInitPurchase();
 		this.props.history.push("/checkout");
 	};
 
@@ -157,12 +158,14 @@ const mapStatesToProps = state => {
 
 const mapDispatchToProps = dispatch => {
 	return {
-		onIngredientAdded: ingName =>
-			dispatch(burgerBuilderActions.addIngredient(ingName)),
+		onIngredientAdded: ingName => dispatch(actions.addIngredient(ingName)),
 		onIngredientRemoved: ingName =>
-			dispatch(burgerBuilderActions.removeIngredient(ingName)),
+			dispatch(actions.removeIngredient(ingName)),
 		onInitIngredients: () => {
-			dispatch(burgerBuilderActions.initialIngredients());
+			dispatch(actions.initialIngredients());
+		},
+		onInitPurchase: () => {
+			dispatch(actions.purchaseInit());
 		}
 	};
 };
