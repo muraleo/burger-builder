@@ -45,3 +45,45 @@ export const purchaseInit = () => {
 		type: actionTypes.PURCHASE_INIT
 	};
 };
+
+export const fetchOrdersSuccess = orderData => {
+	return {
+		type: actionTypes.FETCH_ORDER_SUCCESS,
+		order: orderData
+	};
+};
+
+export const fetchOrdersFailed = err => {
+	return {
+		type: actionTypes.FETCH_ORDER_FAILED,
+		error: err
+	};
+};
+
+export const fetchOrderStart = () => {
+	return {
+		type: actionTypes.FETCH_ORDER_START
+	};
+};
+
+export const fetchOrder = () => {
+	return dispatch => {
+		dispatch(fetchOrderStart());
+		axios
+			.get("/order.json")
+			.then(res => {
+				const fetchedOrders = [];
+				for (let key in res.data) {
+					fetchedOrders.push({
+						id: key,
+						...res.data[key]
+					});
+				}
+				// console.log(fetchedOrders);
+				dispatch(fetchOrdersSuccess(fetchedOrders));
+			})
+			.catch(err => {
+				dispatch(fetchOrdersFailed(err));
+			});
+	};
+};
