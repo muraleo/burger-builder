@@ -1,6 +1,6 @@
 import * as actionTypes from "./actionTypes";
 import axios from "axios";
-import { secretKey } from "../../env";
+import { secretKey } from "../../.env";
 
 export const authStart = () => {
 	return {
