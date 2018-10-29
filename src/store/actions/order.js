@@ -22,12 +22,13 @@ export const purchaseBurgerStart = () => {
 	};
 };
 
-export const purchaseBurger = orderData => {
+export const purchaseBurger = (orderData, token) => {
 	return dispatch => {
 		dispatch(purchaseBurgerStart());
 		axios
 			.post(
-				"https://leo-burger-builder.firebaseio.com/order.json",
+				"https://leo-burger-builder.firebaseio.com/order.json?auth=" +
+					token,
 				orderData
 			)
 			.then(response => {
@@ -66,11 +67,11 @@ export const fetchOrderStart = () => {
 	};
 };
 
-export const fetchOrder = () => {
+export const fetchOrder = token => {
 	return dispatch => {
 		dispatch(fetchOrderStart());
 		axios
-			.get("/order.json")
+			.get("/order.json?auth=" + token)
 			.then(res => {
 				const fetchedOrders = [];
 				for (let key in res.data) {

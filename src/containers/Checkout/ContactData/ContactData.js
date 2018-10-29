@@ -104,7 +104,7 @@ class ContactData extends Component {
 			price: this.props.price,
 			contact: contactData
 		};
-		this.props.onPurchaseBurgerStart(order);
+		this.props.onPurchaseBurgerStart(order, this.props.token);
 
 		// console.log(order);
 		// axios
@@ -214,14 +214,15 @@ const mapStateToProps = state => {
 	return {
 		ings: state.burgerBuilder.ingredients,
 		price: state.burgerBuilder.totalPrice,
-		loading: state.order.loading
+		loading: state.order.loading,
+		token: state.auth.token
 	};
 };
 
 const mapDispatchToProps = dispatch => {
 	return {
-		onPurchaseBurgerStart: orderData =>
-			dispatch(actionTypes.purchaseBurger(orderData))
+		onPurchaseBurgerStart: (orderData, token) =>
+			dispatch(actionTypes.purchaseBurger(orderData, token))
 	};
 };
 
