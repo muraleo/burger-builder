@@ -7,7 +7,6 @@ import OrderSummary from "../../components/Burger/OrderSummary/OrderSummary";
 import axios from "../../axios-db";
 import Spinner from "../../components/UI/Spinner/Spinner";
 import WithErrorHandler from "../../hoc/WithErrorHandler/WithErrorHandler";
-import { Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import * as actions from "../../store/actions/index";
 
@@ -70,6 +69,7 @@ class BurgerBuilder extends Component {
 		if (this.props.isAuth) {
 			this.setState({ purchasing: true });
 		} else {
+			this.props.onSetAuthRedirectPath("/checkout");
 			this.props.history.push("/auth");
 		}
 	};
@@ -173,6 +173,9 @@ const mapDispatchToProps = dispatch => {
 		},
 		onInitPurchase: () => {
 			dispatch(actions.purchaseInit());
+		},
+		onSetAuthRedirectPath: path => {
+			dispatch(actions.setAuthRedirectPath(path));
 		}
 	};
 };
