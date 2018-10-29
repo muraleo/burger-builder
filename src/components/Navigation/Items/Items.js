@@ -5,7 +5,7 @@ import classes from "./Items.module.css";
 const items = props => (
 	<ul className={classes.Items}>
 		<Item link="/">Burger Builder</Item>
-		<Item link="/orders">Orders</Item>
+		{props.isAuth ? <Item link="/orders">Orders</Item> : null}
 		{!props.isAuth ? (
 			<Item link="/auth">Login</Item>
 		) : (
