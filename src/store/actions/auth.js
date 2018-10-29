@@ -2,12 +2,7 @@ import * as actionTypes from "./actionTypes";
 import axios from "axios";
 import { secretKey } from "../../.env";
 
-let key = null;
-if (process.env.NODE_ENV === "development") {
-	key = secretKey;
-} else {
-	key = process.env.SECRET_KEY;
-}
+let key = secretKey;
 
 export const authStart = () => {
 	return {
