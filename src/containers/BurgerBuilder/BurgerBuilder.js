@@ -7,6 +7,7 @@ import OrderSummary from "../../components/Burger/OrderSummary/OrderSummary";
 import axios from "../../axios-db";
 import Spinner from "../../components/UI/Spinner/Spinner";
 import WithErrorHandler from "../../hoc/WithErrorHandler/WithErrorHandler";
+import { Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import * as actions from "../../store/actions/index";
 
@@ -66,7 +67,11 @@ class BurgerBuilder extends Component {
 	}
 
 	updatePurchaseHandler = () => {
-		this.setState({ purchasing: true });
+		if (this.props.isAuth) {
+			this.setState({ purchasing: true });
+		} else {
+			this.props.history.push("/auth");
+		}
 	};
 
 	cancelPurchaseHandler = () => {
@@ -117,6 +122,7 @@ class BurgerBuilder extends Component {
 							this.props.ings
 						)}
 						ordered={this.updatePurchaseHandler}
+						isAuth={this.props.isAuth}
 					/>
 				</AUX>
 			);
@@ -152,7 +158,8 @@ const mapStatesToProps = state => {
 	return {
 		ings: state.burgerBuilder.ingredients,
 		totalPrice: state.burgerBuilder.totalPrice,
-		error: state.burgerBuilder.error
+		error: state.burgerBuilder.error,
+		isAuth: state.auth.token !== null
 	};
 };
 
