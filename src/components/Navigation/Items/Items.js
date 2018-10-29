@@ -6,7 +6,11 @@ const items = props => (
 	<ul className={classes.Items}>
 		<Item link="/">Burger Builder</Item>
 		<Item link="/orders">Orders</Item>
-		<Item link="/auth">Auth</Item>
+		{!props.isAuth ? (
+			<Item link="/auth">Login</Item>
+		) : (
+			<Item link="/logout">Logout</Item>
+		)}
 	</ul>
 );
 
