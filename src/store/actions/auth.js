@@ -2,6 +2,13 @@ import * as actionTypes from "./actionTypes";
 import axios from "axios";
 import { secretKey } from "../../.env";
 
+let key = null;
+if (process.env.NODE_ENV === "development") {
+	key = secretKey;
+} else {
+	key = process.env.SECRET_KEY;
+}
+
 export const authStart = () => {
 	return {
 		type: actionTypes.AUTH_START
@@ -50,11 +57,11 @@ export const auth = (email, password, isSignIn) => {
 		};
 		let url =
 			"https://www.googleapis.com/identitytoolkit/v3/relyingparty/signupNewUser?key=" +
-			secretKey;
+			key;
 		if (isSignIn) {
 			url =
 				"https://www.googleapis.com/identitytoolkit/v3/relyingparty/verifyPassword?key=" +
-				secretKey;
+				key;
 		}
 		axios
 			.post(url, authData)
