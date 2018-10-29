@@ -32,10 +32,11 @@ export const authLogout = () => {
 };
 
 export const checkAuthTimeout = expirationTime => {
+	// console.log(expirationTime);
 	return dispatch => {
 		setTimeout(() => {
 			dispatch(authLogout());
-		}, expirationTime * 1000);
+		}, expirationTime);
 	};
 };
 
@@ -91,7 +92,7 @@ export const authCheckState = () => {
 			const expirationDate = new Date(
 				localStorage.getItem("expirationDate")
 			);
-			if (expirationDate > new Date()) {
+			if (expirationDate <= new Date()) {
 				dispatch(authLogout());
 			} else {
 				const authData = {
@@ -103,7 +104,7 @@ export const authCheckState = () => {
 				dispatch(authSuccess(authData));
 				dispatch(
 					checkAuthTimeout(
-						expirationDate.getSeconds() - new Date().getSeconds()
+						(expirationDate.getTime() - new Date().getTime()) / 1000
 					)
 				);
 			}
