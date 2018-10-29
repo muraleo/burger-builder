@@ -95,8 +95,8 @@ export const authCheckState = () => {
 				dispatch(authLogout());
 			} else {
 				const authData = {
-					token: localStorage.getItem("token"),
-					userId: localStorage.getItem("userId"),
+					idToken: localStorage.getItem("token"),
+					localId: localStorage.getItem("userId"),
 					error: null,
 					loading: false
 				};
